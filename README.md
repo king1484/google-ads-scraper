@@ -1,4 +1,4 @@
 # google-ads-scraper
 
-Run using below command: \n
+Run using command:
 python app.py
