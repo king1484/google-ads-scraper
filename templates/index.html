@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Scraper</title>
+    <style>
+        .search-container {
+            text-align: center;
+        }
+
+        .search-box {
+            width: 330px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box::placeholder {
+            color: #999;
+        }
+
+        .search-button {
+            background-color: #6557F5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            width: 350px;
+        }
+
+        .result-container {
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 20px;
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            width: 350px;
+        }
+
+        .result-image {
+            margin-right: 20px;
+        }
+
+        .result-details {
+            text-align: left;
+        }
+
+        p {
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="search-container">
+        <h2>Product Search</h2>
+        <form method="POST">
+            <input type="text" id="keyword" name="keyword" class="search-box" placeholder="Enter a product name"
+                required>
+            <br><br>
+            <input type="submit" value="Search" class="search-button">
+        </form>
+    </div>
+    {% if result %}
+    {% if result.product_name!="" %}
+    <div class="result-container">
+        <div class="result-image">
+            <img src="{{ result.image_url }}" alt="Product Image">
+        </div>
+        <div class="result-details">
+            <p>The price of {{ result.product_name }} is {{ result.price }}</p>
+            <div class="speak-button"
+                onclick="speakResult('The price of {{ result.product_name }} is {{ result.price }}')">
+                <img src="https://edulastic.com/wp-content/uploads/sites/2/2016/11/Icon-TextToSpeech-Audio.png"
+                    alt="Speaker Icon" height="28px" width="28px">
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if result.product_name=="" %}
+    <div class="result-container">
+        <p>No products found!</p>
+    </div>
+    {% endif %}
+
+
+    <script>
+        const searchBox = document.getElementById("keyword");
+
+        searchBox.addEventListener("input", function () {
+            searchBox.style.borderColor = "#6557F5";
+        });
+
+        function speakResult(text) {
+            const speechSynthesis = window.speechSynthesis;
+            const speechText = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(speechText);
+        }
+    </script>
+</body>
+
+</html>
